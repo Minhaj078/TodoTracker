@@ -1,0 +1,622 @@
+/* General Body and Layout */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex; /* Use flexbox for main layout */
+    min-height: 100vh;
+    background-color: #1a1a1a; /* Dark background */
+    color: #eee; /* Light text */
+    transition: background-color 0.3s ease;
+}
+
+/* Sidebar Styling */
+.sidebar {
+    width: 250px;
+    background-color: #222;
+    padding: 20px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar h2 {
+    color: #007bff; /* A nice blue for the app name */
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.menu-item {
+    padding: 10px 15px;
+    margin-bottom: 10px;
+    color: #bbb;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.menu-item:hover {
+    background-color: #333;
+    color: #fff;
+}
+
+.history-heading {
+    margin-top: 30px;
+    margin-bottom: 10px;
+    color: #007bff;
+    padding-left: 15px;
+}
+
+.history-list {
+    list-style: none;
+    padding: 0 15px;
+    margin: 0;
+}
+
+.history-list li {
+    padding: 8px 0;
+    font-size: 0.9em;
+    color: #bbb;
+    border-bottom: 1px solid #333;
+}
+
+.history-list li:last-child {
+    border-bottom: none;
+}
+
+.clear-history {
+    background-color: #dc3545; /* Red for clear button */
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.8em;
+    margin-top: 15px;
+    width: 100%;
+    text-align: center;
+}
+.clear-history:hover {
+    background-color: #c82333;
+}
+
+/* Logout button in sidebar */
+.logout-button {
+    margin-top: auto; /* Pushes it to the bottom of the flex container */
+    color: #dc3545; /* Red color for logout */
+    border-top: 1px solid #333; /* Optional: Separator line */
+    padding-top: 15px;
+}
+
+.logout-button:hover {
+    background-color: #dc3545; /* Red background on hover */
+    color: white;
+}
+
+
+/* Main Content Area */
+.content {
+    flex-grow: 1; /* Allows content to take remaining space */
+    padding: 20px;
+    background-color: #1a1a1a;
+    display: flex;
+    flex-direction: column;
+}
+
+.breadcrumbs {
+    font-size: 0.9em;
+    color: #888;
+    margin-bottom: 20px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.header h2 {
+    margin: 0;
+    color: #eee;
+}
+
+.header button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.2s ease;
+}
+
+.header button:hover {
+    background-color: #0056b3;
+}
+
+/* Search Section */
+.search-section {
+    margin-bottom: 20px;
+}
+
+.search-section input {
+    width: calc(100% - 22px); /* Account for padding and border */
+    padding: 10px;
+    border: 1px solid #444;
+    border-radius: 5px;
+    background-color: #2a2a2a;
+    color: #eee;
+    outline: none;
+}
+
+.search-section input::placeholder {
+    color: #888;
+}
+
+/* Columns for Tasks */
+.columns {
+    display: flex;
+    gap: 20px; /* Space between columns */
+    margin-bottom: 40px; /* Space before habit tracker */
+    flex-wrap: wrap; /* Allow columns to wrap on smaller screens */
+}
+
+.column {
+    flex: 1; /* Distribute space evenly */
+    min-width: 280px; /* Minimum width for columns */
+    background-color: #222;
+    padding: 15px;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    min-height: 200px; /* Give columns some height */
+}
+
+.column h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    color: #eee;
+    display: flex;
+    align-items: center;
+}
+
+.dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-right: 8px;
+}
+
+.dot.teal { background-color: #00bcd4; }
+.dot.orange { background-color: #ff9800; }
+.dot.green { background-color: #4caf50; }
+
+.add-new {
+    background-color: #333;
+    color: #bbb;
+    padding: 10px;
+    border-radius: 8px;
+    text-align: center;
+    cursor: pointer;
+    margin-bottom: 10px;
+    border: 1px dashed #444;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.add-new:hover {
+    background-color: #444;
+    color: #fff;
+}
+
+/* Task Item Styling (Crucial for dropdown fix) */
+.task {
+    background-color: #2a2a2a;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    position: relative; /* CRUCIAL: Makes .task a positioning context for its absolute children */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.task-title {
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #fff;
+}
+
+.task > div:nth-child(2), /* Description */
+.task > div:nth-child(3) { /* Date/Time */
+    font-size: 0.9em;
+    color: #bbb;
+    margin-bottom: 5px;
+}
+
+.task-menu {
+    position: absolute; /* Position relative to the .task parent */
+    top: 10px; /* Adjust as needed */
+    right: 10px; /* Adjust as needed */
+    cursor: pointer;
+    font-size: 1.2em;
+    color: #bbb;
+    z-index: 10; /* Ensure the menu icon is above other elements within the task */
+    padding: 0 5px; /* Add some padding around the dots for easier click and hover area */
+    border-radius: 4px; /* Optional: Slight rounded corners */
+    transition: background-color 0.2s ease, color 0.2s ease; /* Smooth transition */
+}
+
+/* CORRECTED HOVER EFFECT FOR THE TRIPLE DOTS ICON */
+.task-menu:hover {
+    background-color: #555; /* A slightly lighter background on hover for better contrast */
+    color: #fff; /* Ensure dots turn white on hover */
+}
+
+
+.task-menu .dropdown {
+    display: none; /* Hidden by default */
+    position: absolute; /* Position relative to the .task-menu parent */
+    top: 0; /* Align with the top of the '...' icon */
+    right: 25px; /* Position to the left of the '...' icon, adjust as needed */
+    background-color: #3a3a3a; /* Darker background for the dropdown */
+    border: 1px solid #444;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Stronger shadow for visibility */
+    min-width: 120px;
+    z-index: 1000; /* CRUCIAL: High z-index to ensure it appears above *everything* else */
+    padding: 5px 0; /* Add some padding */
+}
+
+.task-menu .dropdown button {
+    display: block; /* Each button on its own line */
+    width: 100%;
+    padding: 8px 15px;
+    text-align: left;
+    background: none;
+    border: none;
+    color: #eee;
+    cursor: pointer;
+    font-size: 0.9em;
+    white-space: nowrap; /* Prevent text wrapping */
+    transition: background-color 0.2s ease, color 0.2s ease; /* Smooth transition */
+}
+
+/* Hover effect for dropdown menu items */
+.task-menu .dropdown button:hover {
+    background-color: #555; /* Hover effect */
+    color: #fff; /* Lighter text on hover */
+}
+
+/* JavaScript will toggle this class to show/hide the dropdown */
+.task-menu.show-dropdown .dropdown {
+    display: block;
+}
+
+
+/* Task Form (for New/Edit Task) - Now an overlay */
+#taskForm {
+    background-color: #222;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+
+    /* --- CRUCIAL CHANGES FOR POSITIONING --- */
+    position: fixed; /* Fix it relative to the viewport */
+    top: 50%; /* Start at 50% from the top */
+    left: 50%; /* Start at 50% from the left */
+    transform: translate(-50%, -50%); /* Center the element precisely */
+    max-width: 500px; /* Keep max width */
+    width: 90%; /* Make it responsive for smaller screens */
+    z-index: 2000; /* CRITICAL: A very high z-index to ensure it's on top of everything */
+
+    display: none; /* Keep it hidden by default, JS will change this */
+}
+
+#taskForm input[type="text"],
+#taskForm textarea,
+#taskForm select,
+#taskForm input[type="date"] {
+    width: calc(100% - 22px);
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #444;
+    border-radius: 4px;
+    background-color: #2a2a2a;
+    color: #eee;
+    outline: none;
+}
+
+#taskForm textarea {
+    min-height: 80px;
+    resize: vertical;
+}
+
+#taskForm button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    margin-right: 10px;
+    transition: background-color 0.2s ease;
+}
+
+#taskForm button:hover {
+    background-color: #0056b3;
+}
+
+#taskForm button:last-child {
+    background-color: #6c757d;
+}
+#taskForm button:last-child:hover {
+    background-color: #5a6268;
+}
+
+/* Overlay for the form */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent black */
+    z-index: 1999; /* Just below the form */
+    display: none; /* Hidden by default */
+}
+
+
+/* Habit Tracker Table */
+#habitCalendarContainer {
+    margin-top: 20px;
+    background-color: #222;
+    padding: 15px;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    overflow-x: auto; /* Enable horizontal scrolling for narrow screens */
+}
+
+#habitCalendarContainer table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#habitCalendarContainer th,
+#habitCalendarContainer td {
+    border: 1px solid #333;
+    padding: 8px;
+    text-align: center;
+    color: #eee;
+    white-space: nowrap; /* Prevent date/day headers from wrapping */
+}
+
+#habitCalendarContainer th {
+    background-color: #3a3a3a;
+    font-weight: bold;
+}
+
+#habitCalendarContainer td {
+    background-color: #2a2a2a;
+}
+
+/* --- Toggle Switch Styling (REPLACES checkbox) --- */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 40px; /* Width of the entire switch */
+  height: 20px; /* Height of the entire switch */
+  vertical-align: middle; /* Align with text in table cell */
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc; /* Off state background */
+  transition: .4s;
+  border-radius: 20px; /* Rounded corners for the track */
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 16px; /* Height of the thumb */
+  width: 16px; /* Width of the thumb */
+  left: 2px; /* Position from left */
+  bottom: 2px; /* Position from bottom */
+  background-color: white;
+  transition: .4s;
+  border-radius: 50%; /* Make thumb round */
+}
+
+input:checked + .slider {
+  background-color: #4CAF50; /* On state background (green) */
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #4CAF50;
+}
+
+input:checked + .slider:before {
+  transform: translateX(20px); /* Move thumb to the right */
+}
+/* --- END Toggle Switch Styling --- */
+
+
+#habitCalendarContainer strong {
+    color: #ffc107; /* Gold color for streak */
+}
+
+/* Dark Theme (if you have a theme switcher) */
+body.dark-theme {
+    background-color: #121212;
+    color: #f0f0f0;
+}
+
+body.dark-theme .sidebar {
+    background-color: #1c1c1c;
+}
+
+body.dark-theme .menu-item:hover {
+    background-color: #282828;
+}
+
+body.dark-theme .content,
+body.dark-theme .column,
+body.dark-theme #taskForm,
+body.dark-theme #habitCalendarContainer,
+body.dark-theme #authSection > div { /* Apply dark theme to auth forms as well */
+    background-color: #1c1c1c;
+}
+
+body.dark-theme .search-section input,
+body.dark-theme #taskForm input,
+body.dark-theme #taskForm textarea,
+body.dark-theme #taskForm select {
+    background-color: #282828;
+    border-color: #333;
+    color: #f0f0f0;
+}
+
+body.dark-theme #habitCalendarContainer th {
+    background-color: #282828;
+}
+
+body.dark-theme #habitCalendarContainer td {
+    background-color: #1f1f1f;
+}
+
+body.dark-theme .task {
+    background-color: #202020;
+}
+body.dark-theme .task-menu .dropdown {
+    background-color: #282828;
+    border-color: #333;
+}
+body.dark-theme .task-menu .dropdown button:hover {
+    background-color: #3a3a3a;
+}
+body.dark-theme .task-menu:hover { /* Dark theme hover for dots */
+    background-color: #333; /* Darker background for consistency with other hover effects */
+    color: #fff;
+}
+/* Dark theme for toggle switch */
+body.dark-theme .slider {
+    background-color: #555;
+}
+body.dark-theme input:checked + .slider {
+    background-color: #4caf50;
+}
+
+
+/* Basic styling for authentication section */
+#authSection {
+    margin-top: 20px;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 20px;
+    background: #2a2a2a;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    color: #eee; /* Light text for auth section */
+}
+
+#authSection h3, #authSection h4 {
+    text-align: center;
+    color: #eee;
+    margin-bottom: 15px;
+}
+
+#authSection > div { /* For the register/login boxes */
+    margin-top: 20px;
+    padding: 15px;
+    border: 1px solid #444;
+    border-radius: 8px;
+    background: #333;
+}
+
+#authSection input {
+    width: calc(100% - 22px);
+    padding: 10px;
+    margin: 8px 0;
+    border: 1px solid #555;
+    border-radius: 4px;
+    background: #444;
+    color: #eee;
+    outline: none;
+}
+
+#authSection button {
+    width: 100%;
+    padding: 10px;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+    font-size: 16px;
+    transition: background-color 0.2s ease;
+}
+
+#authSection button[onclick="registerUser()"] {
+    background-color: #007bff;
+}
+#authSection button[onclick="registerUser()"]:hover {
+    background-color: #0056b3;
+}
+
+#authSection button[onclick="loginUser()"] {
+    background-color: #28a745;
+}
+#authSection button[onclick="loginUser()"]:hover {
+    background-color: #218838;
+}
+
+#authSection button[onclick="logoutUser()"] {
+    background-color: #dc3545;
+    margin-top: 20px;
+}
+#authSection button[onclick="logoutUser()"]:hover {
+    background-color: #c82333;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 100%;
+        height: auto;
+        padding: 15px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    }
+
+    .content {
+        padding: 15px;
+    }
+
+    .columns {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .column {
+        min-width: unset; /* Remove min-width for full width on small screens */
+        width: 100%;
+    }
+
+    #taskForm {
+        width: 95%; /* Make form even narrower on very small screens */
+    }
+}
