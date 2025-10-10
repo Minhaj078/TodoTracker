@@ -20,10 +20,14 @@ body {
     flex-direction: column;
 }
 
-.sidebar h2 {
-    color: #007bff; /* A nice blue for the app name */
-    text-align: center;
+.sidebar h1 {
+    background: linear-gradient(90deg, #00d4ff, #860fe7ff); /* Blue to cyan gradient */
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text; 
+    margin-left: 13px;
     margin-bottom: 30px;
+    font-weight: bold;
 }
 
 .menu-item {
@@ -80,7 +84,6 @@ body {
     background-color: #c82333;
 }
 
-/* Logout button in sidebar */
 .logout-button {
     margin-top: auto; /* Pushes it to the bottom of the flex container */
     color: #dc3545; /* Red color for logout */
