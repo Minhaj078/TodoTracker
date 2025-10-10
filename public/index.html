@@ -9,15 +9,17 @@
 </head>
 <body>
   <div class="sidebar">
-    <h2>ToDo</h2>
-    <div class="menu-item">Dashboard</div>
-    <h3 class="history-heading">History</h3>
+    <h1>ToDo</h1>
+    <div class="menu-item" id="dashtitle">Dashboard</div>
+    <h3 class="history-heading" id="histitle">History</h3>
     <ul id="historyList" class="history-list"></ul>
 
     <div class="menu-item logout-button" onclick="logoutUser()">Logout</div>
   </div>
 
+  <!-- MAIN DASHBOARD CONTENT -->
   <div class="content" id="mainAppContent" style="display: none;">
+    <h2>ToDo</h2>
     <div class="breadcrumbs">Dashboard > Overview</div>
     <div class="header">
       <h2>My Todo</h2>
@@ -48,33 +50,40 @@
 
     <h3 style="margin-top: 40px;">Weekly Habit Tracker</h3>
     <div id="habitCalendarContainer"></div>
+  </div>
 
-    </div> <div id="authSection" style="display: none; margin-top: 20px; max-width: 400px; margin-left: auto; margin-right: auto; padding: 20px; background: #2a2a2a; border-radius: 12px; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
+  <!-- AUTH SECTION -->
+  <div id="authSection" style="display: block; margin-top: 100px; height:450px;max-width: 400px; margin-left: auto; margin-right: auto; padding: 20px; background: #2a2a2a; border-radius: 12px; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
     <h3 style="text-align: center; color: #eee;">User Authentication</h3>
 
-    <div style="margin-top: 20px; padding: 15px; border: 1px solid #444; border-radius: 8px; background: #333;">
+    <!-- SIGNUP FORM -->
+    <div id="registerForm" style="margin-top: 20px; padding: 15px; border: 1px solid #444; border-radius: 8px; background: #333;">
         <h4 style="color: #eee;">Register</h4>
-        <input type="text" id="registerUsername" placeholder="Username" style="width: calc(100% - 22px); padding: 10px; margin: 8px 0; border: 1px solid #555; border-radius: 4px; background: #444; color: #eee; outline: none;" />
-        <input type="email" id="registerEmail" placeholder="Email" style="width: calc(100% - 22px); padding: 10px; margin: 8px 0; border: 1px solid #555; border-radius: 4px; background: #444; color: #eee; outline: none;" />
-        <input type="password" id="registerPassword" placeholder="Password" style="width: calc(100% - 22px); padding: 10px; margin: 8px 0; border: 1px solid #555; border-radius: 4px; background: #444; color: #eee; outline: none;" />
+        <input type="text" id="registerUsername" placeholder="Username" style="width: calc(100% - 22px); padding: 10px; margin: 8px 0; border: 1px solid #555; border-radius: 4px; background: #444; color: #eee;" />
+        <input type="email" id="registerEmail" placeholder="Email" style="width: calc(100% - 22px); padding: 10px; margin: 8px 0; border: 1px solid #555; border-radius: 4px; background: #444; color: #eee;" />
+        <input type="password" id="registerPassword" placeholder="Password" style="width: calc(100% - 22px); padding: 10px; margin: 8px 0; border: 1px solid #555; border-radius: 4px; background: #444; color: #eee;" />
         <button type="button" onclick="registerUser()" style="width: 100%; padding: 10px; background-color: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; margin-top: 10px; font-size: 16px;">Register</button>
+        <p style="text-align:center; margin-top:10px;">
+          Already have an account? <a href="#" onclick="toggleAuthForms('login')">Login</a>
+        </p>
     </div>
 
-    <div style="margin-top: 20px; padding: 15px; border: 1px solid #444; border-radius: 8px; background: #333;">
+    <!-- LOGIN FORM -->
+    <div id="loginForm" style="display:none; margin-top: 20px; padding: 15px; border: 1px solid #444; border-radius: 8px; background: #333;">
         <h4 style="color: #eee;">Login</h4>
-        <input type="email" id="loginEmail" placeholder="Email" style="width: calc(100% - 22px); padding: 10px; margin: 8px 0; border: 1px solid #555; border-radius: 4px; background: #444; color: #eee; outline: none;" />
-        <input type="password" id="loginPassword" placeholder="Password" style="width: calc(100% - 22px); padding: 10px; margin: 8px 0; border: 1px solid #555; border-radius: 4px; background: #444; color: #eee; outline: none;" />
+        <input type="email" id="loginEmail" placeholder="Email" style="width: calc(100% - 22px); padding: 10px; margin: 8px 0; border: 1px solid #555; border-radius: 4px; background: #444; color: #eee;" />
+        <input type="password" id="loginPassword" placeholder="Password" style="width: calc(100% - 22px); padding: 10px; margin: 8px 0; border: 1px solid #555; border-radius: 4px; background: #444; color: #eee;" />
         <button type="button" onclick="loginUser()" style="width: 100%; padding: 10px; background-color: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer; margin-top: 10px; font-size: 16px;">Login</button>
+        <p style="text-align:center; margin-top:10px;">
+          Don't have an account? <a href="#" onclick="toggleAuthForms('register')">Sign up</a>
+        </p>
     </div>
-
-    <button type="button" onclick="logoutUser()" style="width: 100%; padding: 10px; margin-top: 20px; background-color: #dc3545; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px;">Logout</button>
   </div>
+
+  <!-- TASK FORM -->
   <div id="taskForm" style="display: none;">
       <input type="text" id="taskTitle" placeholder="Habit Name" />
-      <textarea
-        id="taskDesc"
-        placeholder="Habit Description (optional)"
-      ></textarea>
+      <textarea id="taskDesc" placeholder="Habit Description (optional)"></textarea>
       <select id="habitTime">
         <option value="">-- Select Time --</option>
         <option value="Morning">Morning</option>
@@ -89,6 +98,5 @@
   </div>
 
   <div id="overlay" class="overlay" style="display: none;"></div>
-
 </body>
 </html>

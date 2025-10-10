@@ -1,7 +1,4 @@
-// app.js
-
-// --- Global Variables and Base URL ---
-const API_BASE_URL = 'http://localhost:5000/api'; // Make sure this matches your backend URL
+const API_BASE_URL = 'http://localhost:5000/api'; 
 let authToken = localStorage.getItem('token'); // Get token from local storage on load
 let tasks = []; // This will now store tasks fetched from the backend
 let currentStatus = 'toStart'; // Still used for new task creation default status
@@ -97,13 +94,18 @@ async function loginUser() {
         authToken = data.token;
         localStorage.setItem('token', authToken);
         alert('Login successful!');
+        const authTitle = document.getElementById('authTitle');
+        if (authTitle) authTitle.style.display = 'none';
         document.getElementById('loginEmail').value = '';
         document.getElementById('loginPassword').value = '';
+        document.querySelector(".sidebar").style.display = "flex"; // flex because sidebar uses flexbox
+        document.getElementById("mainAppContent").style.display = "block";
         handleAuthSuccess();
     } catch (error) {
         console.error('Login failed:', error);
     }
 }
+
 
 function logoutUser() {
     authToken = null;
@@ -113,19 +115,23 @@ function logoutUser() {
     alert('Logged out. Please login again.');
     mainAppContent.style.display = 'none'; // Hide main content
     authSection.style.display = 'block'; // Show auth section
+    
+    document.getElementById("mainAppContent").style.display = "none";
     if (logoutButtonSidebar) { // Hide sidebar logout button as well
         logoutButtonSidebar.style.display = 'none';
     }
 }
 
 function handleAuthSuccess() {
-    authSection.style.display = 'none'; // Hide auth section
-    mainAppContent.style.display = 'block'; // Show main content
-    if (logoutButtonSidebar) { // Show sidebar logout button
-        logoutButtonSidebar.style.display = 'block';
-    }
-    fetchTasks(); // Load user's data
+    const authTitle = document.getElementById('authTitle');
+    if (authTitle) authTitle.style.display = 'none';
+
+    authSection.style.display = 'none';
+    mainAppContent.style.display = 'block';
+    if (logoutButtonSidebar) logoutButtonSidebar.style.display = 'block';
+    fetchTasks();
 }
+
 
 // --- Task/Habit Functions ---
 
@@ -451,6 +457,7 @@ function saveToHistory(title, date) {
 }
 
 function renderHistory() {
+    if(!authToken)return;
     const historyList = document.getElementById("historyList");
     const history = JSON.parse(localStorage.getItem("taskHistory")) || [];
 
@@ -489,6 +496,19 @@ if (themeToggle) {
         document.body.classList.toggle('dark-theme', themeToggle.checked);
         localStorage.setItem('theme', themeToggle.checked ? 'dark' : 'light');
     });
+}
+
+function toggleAuthForms(type) {
+  const registerForm = document.getElementById('registerForm');
+  const loginForm = document.getElementById('loginForm');
+
+  if (type === 'login') {
+    registerForm.style.display = 'none';
+    loginForm.style.display = 'block';
+  } else {
+    loginForm.style.display = 'none';
+    registerForm.style.display = 'block';
+  }
 }
 
 // --- Initial App Load ---
